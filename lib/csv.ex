@@ -1,11 +1,12 @@
 defmodule Csv do
 
+  alias Csv.{Reader}
+
   @clearbit_api_key "sk_1234_abcd"
 
   def email_status_from_csv!(filename \\ "email_data.csv") do
     filename
-    |> File.stream!()
-    |> CSV.decode!(headers: true)
+    |> Reader.read!()
     |> Enum.each(&get_status!/1)
   end
 
