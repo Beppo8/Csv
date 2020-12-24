@@ -3,11 +3,12 @@ defmodule Csv do
   alias Csv.{Reader, RiskAPI, Writer}
 
   def email_status_from_csv!(filename \\ "email_data.csv") do
+    file = File.stream!("validated_emails.csv")
+
     filename
     |> Reader.read!()
-    |> Enum.map(&RiskAPI.get_status!/1)
-    |> Enum.sort()
-    |> Writer.write!()
+    |> Stream.map(&RiskAPI.get_status!/1)
+    |> Writer.write!(file)
   end
 
 end
