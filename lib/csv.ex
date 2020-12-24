@@ -7,7 +7,7 @@ defmodule Csv do
 
     filename
     |> Reader.read!()
-    |> Stream.map(&RiskAPI.get_status!/1)
+    |> Stream.map(&RiskAPI.get_status!/1, max_concurrency: 10)
     |> Writer.write!(file)
   end
 
